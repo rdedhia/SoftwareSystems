@@ -29,7 +29,10 @@ char *strjoin(char *array[], int n)
         size = size + strlen(array[i]);
     }
 
+    //char * changes dest from void pointer to char pointer
     dest = (char *) malloc(size * sizeof(char));
+    //to return valid null string if loop doesn't run
+    dest[0] = '\0';
 
     for (i=0; i<n; i++) {
         strcat(dest, tracks[i]);
@@ -41,7 +44,6 @@ char *strjoin(char *array[], int n)
     }
     dest[size-1] = '\0';
 
-    // TODO: fill this in
     return dest;
 }
 
