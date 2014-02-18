@@ -38,13 +38,13 @@ void find_track(char search_for[])
 // Finds all tracks that match the given pattern.
 //
 // Prints track number and title.
-void find_track_regex(regex_t *pexp) 
+void find_track_regex(regex_t *search) 
 {
     puts("\nRegex search:\n");
     regmatch_t matches[MAX_MATCHES]; //A list of the matches in the string (a list of 1)
     int i;
     for (i=0; i<NUM_TRACKS; i++) {
-        if (regexec(pexp, tracks[i], MAX_MATCHES, matches, 0) == 0) {
+        if (regexec(search, tracks[i], MAX_MATCHES, matches, 0) == 0) {
             printf("Track %i: '%s'\n", i, tracks[i]);
         }
     }
