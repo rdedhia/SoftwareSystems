@@ -19,6 +19,8 @@
 
 // generate a random float using the algorithm described
 // at allendowney.com/research/rand
+#include <inttypes.h>
+
 float my_random_float()
 {
   int x, exp, mant;
@@ -89,19 +91,21 @@ float my_random_float2()
 // compute a random double using my algorithm
 double my_random_double()
 {
-  int x;
+  long x;
   long mant;
-  int exp = 126;
+  long exp = 1022;
   int mask = 1;
 
   union {
-    double f;
-    long i;
+    double d;
+    long l;
   } b;
 
   // generate random bits until we see the first set bit
   while (1) {
     x = random();
+    x <<= 32;
+    x = x + random();
     if (x == 0) {
       exp -= 63;
     } else {
@@ -117,9 +121,9 @@ double my_random_double()
 
   // use the remaining bit as the mantissa
   mant = x >> 11;
-  b.i = (exp << 52) | mant;
+  b.l = (exp << 52) | mant;
 
-  return b.f;
+  return b.d;
 }
 
 // return a constant (this is a dummy function for time trials)
