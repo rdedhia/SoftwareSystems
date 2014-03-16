@@ -17,8 +17,8 @@ License: Creative Commons Attribution-ShareAlike 3.0
 typedef struct {
     enum Type {INT, STRING} type;
     union {
-	int i;
-	char *s;
+    	int i;
+    	char *s;
     };
 } Value;
 
@@ -51,12 +51,12 @@ void print_value (Value *value)
 	return;
     }
     switch (value->type) {
-    case INT:
-	printf ("%d", value->i);
-	break;
-    case STRING:
-	printf ("%s", value->s);
-	break;
+        case INT:
+            printf ("%d", value->i);
+            break;
+        case STRING:
+            printf ("%s", value->s);
+        	break;
     }
 }
 
@@ -116,8 +116,8 @@ int hash_string(void *p)
     int i = 0;
 
     while (s[i] != 0) {
-	total += s[i];
-	i++;
+    	total += s[i];
+    	i++;
     }
     return total;
 }
@@ -133,24 +133,21 @@ int hash_hashable(Hashable *hashable)
 /* Compares integers. */
 int equal_int (void *ip, void *jp)
 {
-    // FIX ME!
-    return 0;
+    return *(int*)ip == *(int*)jp;
 }
 
 
 /* Compares strings. */
 int equal_string (void *s1, void *s2)
 {
-    // FIX ME!
-    return 0;
+    return strcmp((char*)s1, (char*)s2);
 }
 
 
 /* Compares Hashables. */
 int equal_hashable(Hashable *h1, Hashable *h2)
 {
-    // FIX ME!
-    return 0;
+    return hashable->equal(h1,h2);
 }
 
 
@@ -189,8 +186,11 @@ typedef struct node {
 /* Makes a Node. */
 Node *make_node(Hashable *key, Value *value, Node *next)
 {
-    // FIX ME!
-    return NULL;
+    node = (Node*) malloc(sizeof(Node));
+    node->key = key;
+    node->value = value;
+    node->node = node;
+    return node
 }
 
 
