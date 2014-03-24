@@ -147,7 +147,6 @@ int equal_string (void *s1, void *s2)
 /* Compares Hashables. */
 int equal_hashable(Hashable *h1, Hashable *h2)
 {   
-    puts("Checking equality");
     return h1->equal(h1,h2);
 }
 
@@ -227,15 +226,11 @@ Node *prepend(Hashable *key, Value *value, Node *rest)
 /* Looks up a key and returns the corresponding value, or NULL */
 Value *list_lookup(Node *list, Hashable *key)
 {   
-    puts("Entering list lookup");
     if (equal_hashable(key, list->key)) {
-        puts("Hashable");
         return list->value;
     } else if (list->next) {
-        puts("Next time");
         return list_lookup(list->next, key);
     } else {
-        puts("Sadness");
         return NULL;
     }
 }
@@ -275,7 +270,8 @@ void print_map(Map *map)
 
 /* Adds a key-value pair to a map. */
 void map_add(Map *map, Hashable *key, Value *value)
-{
+{   
+    // Using %n to bin (index) values in map
     int index = hash_hashable(key) % map->n;
     map->lists[index] = prepend(key, value, map->lists[index]);
 }
@@ -285,6 +281,7 @@ void map_add(Map *map, Hashable *key, Value *value)
 Value *map_lookup(Map *map, Hashable *key)
 {
     int n = map->n;
+    // Using %n to find the bin (index) the key is in
     int index = hash_hashable(key) % n;
     return list_lookup(map->lists[index], key);
 }
@@ -316,15 +313,12 @@ int main ()
 
     // run some test lookups
     Value *value = list_lookup (list, hashable1);
-    puts("Lookup 1\n");
     print_lookup(value);
 
     value = list_lookup (list, hashable2);
-    puts("Lookup 2\n");
     print_lookup(value);
 
     value = list_lookup (list, hashable3);
-    puts("Lookup 3\n");
     print_lookup(value);
 
     // make a map
@@ -334,19 +328,15 @@ int main ()
 
     printf ("Map\n");
     print_map(map);
-    puts("Map is Finished\n");
 
     // run some test lookups
     value = map_lookup(map, hashable1);
-    puts("Map Lookup 1\n");
     print_lookup(value);
 
     value = map_lookup(map, hashable2);
-    puts("Map Lookup 2\n");
     print_lookup(value);
 
     value = map_lookup(map, hashable3);
-    puts("Map Lookup 3\n");
     print_lookup(value);
 
     return 0;
