@@ -185,7 +185,7 @@ int is_magic_square(Matrix *A) {
         diag_a += A->data[i][i];
         diag_b += A->data[i][(n-1)-i];
         printf("row %d\t%lf\n", i, res[i]);
-        printf("col %d\t%lf\n", i, col_res[i]);
+        printf("columns %d\t%lf\n", i, col_res[i]);
         if (res[i] != m)
             return 0;
         if (col_res[i] != m)
