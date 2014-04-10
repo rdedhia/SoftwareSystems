@@ -171,32 +171,33 @@ double *col_sum(Matrix *A) {
     return res;
 }
 
+// Returns 1 if is_magic_square is a magic square, otherwise returns 0
 int is_magic_square(Matrix *A) {
+    assert(A->rows == A->cols);
     int i;
     int n = A->rows;
-    double m;
+    double check;
     double diag_a = 0.0;
     double diag_b = 0.0;
-    m = n*(n*n + 1) / 2;
 
     double *res = row_sum(A);
+    // col_res contains the sums of the columns
     double *col_res = col_sum(A);
+    check = res[0];
+
+    // loop and if statements to return 0 if all rows, columns, and 
+    // diagonals do not add to the same value
     for (i=0; i<n; i++) {
         diag_a += A->data[i][i];
         diag_b += A->data[i][(n-1)-i];
-        printf("row %d\t%lf\n", i, res[i]);
-        printf("columns %d\t%lf\n", i, col_res[i]);
-        if (res[i] != m)
-            return 0;
-        if (col_res[i] != m)
+        if ((res[i] != check) || (col_res[i] != check))
             return 0;
     }
-    if ((diag_a != m) || (diag_b != m))
+    if ((diag_a != check) || (diag_b != check))
         return 0;
-    printf("diagonal a %lf\n", diag_a);
-    printf("diagonal b %lf\n", diag_b);
     return 1;
 }
+
 /* 
    http://en.wikipedia.org/wiki/Magic_square
 
@@ -210,7 +211,6 @@ int is_magic_square(Matrix *A) {
 
    Feel free to use row_sum().
 */
-
 
 int main() {
     int i;
