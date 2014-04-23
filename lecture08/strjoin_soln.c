@@ -27,16 +27,18 @@ char *strjoin(char *array[], int n)
     char *dest, *buf;
 
     for (i=0; i<n; i++) {
-	total += strlen(array[i]);
+	   total += strlen(array[i]);
     }
 
     buf = (char *) malloc (total * sizeof(char));
     buf[0] = '\0';
+    //dest points to beginning of buf
     dest = buf;
 
     for (i=0; i<n; i++) {
-	strcpy(dest, array[i]);
-	dest += strlen(array[i]);
+	   strcpy(dest, array[i]);
+       //dest moves to point to later location of buf
+	   dest += strlen(array[i]);
     }
     return buf;
 }

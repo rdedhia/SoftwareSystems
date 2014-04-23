@@ -18,10 +18,23 @@ License: Creative Commons Attribution-ShareAlike 3.0
 
 char *center(char *s, int n, char fillchar)
 {
-    // FILL THIS IN
-    //    return NULL;
+    char *dest;
+    int total = 1;
+    int i; int j;
+    total = total + n + strlen(s);
+    //printf("%i\n", total);
+    dest = (char *) malloc (total * sizeof(char));
+    
+    int half = n/2;
+    for (i=0; i<half; i++) {
+        dest[i] = fillchar;
+    }
+    strcat(dest, s);
+    for (j=strlen(s)+half; j<total-1; j++) {
+        dest[j] = fillchar;
+    }
+    return dest;
 }
-
 
 int main (int argc, char *argv[])
 {
