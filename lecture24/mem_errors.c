@@ -19,7 +19,6 @@ int read_element(int *array, int index) {
     return x;
 }
 
-
 int main ()
 {
     int never_allocated;

@@ -16,10 +16,16 @@ typedef struct node {
 } Node;
 
 Node *make_node(int val, Node *next) {
-    Node *node = malloc(sizeof(Node));
+    Node *node = malloc(sizeof(Node)); //lost
     node->val = val;
     node->next = next;
     return node;
+}
+
+void free_list(Node *list) {
+    if (list==NULL) return;
+    free_list(list->next);
+    free(list);
 }
 
 void print_list(Node *head) {
@@ -48,7 +54,7 @@ int pop(Node **head) {
 
 // Add a new element to the beginning of the list.
 void push(Node **head, int val) {
-    Node *new_node = make_node(val, *head);
+    Node *new_node = make_node(val, *head); // lost
     *head = new_node;
 }
 
@@ -90,10 +96,10 @@ void reverse(Node **head) {
     node->next = NULL;
 
     while (next != NULL) {
-	temp = next->next;
-	next->next = node;
-	node = next;
-	next = temp;
+    	temp = next->next;
+    	next->next = node;
+    	node = next;
+    	next = temp;
     }
     *head = node;
 }
@@ -107,14 +113,14 @@ int insert_by_index(Node **head, int val, int index) {
     Node *node = *head;
 
     if (index == 0) {
-	push(head, val);
-	return 0;
+    	push(head, val); // lost
+    	return 0;
     }
 
     for (i=0; i<index-1; i++) {
-	if (node == NULL) return -1;
-	node = node->next;
-    }
+    	if (node == NULL) return -1;
+    	   node = node->next;
+        }
     if (node == NULL) return -1;
     node->next = make_node(val, node->next);
     return 0;
@@ -161,7 +167,10 @@ int main() {
     print_list(empty);
 
     Node *something = make_something();
-    free(something);
+    free_list(something);
+
+    free_list(test_list);
+    free_list(empty);
 
     return 0;
 }

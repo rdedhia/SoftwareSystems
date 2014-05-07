@@ -96,7 +96,8 @@ int main (int argc, char** argv)
        (one-L) NUL terminated strings */
     gchar **array;
     gchar line[128];
-    GHashTable* hash = g_hash_table_new (g_str_hash, g_str_equal);
+    GHashTable* hash = g_hash_table_new_full(g_str_hash, g_str_equal,
+        g_free, g_free);
     int i;
 
     // read lines from the file and build the hash table
@@ -115,15 +116,16 @@ int main (int argc, char** argv)
     // g_hash_table_foreach (hash,  (GHFunc) printor, "Word %s freq %d\n");
 
     // iterate the hash table and build the sequence
-    GSequence *seq = g_sequence_new (NULL);
+    GSequence *seq = g_sequence_new (g_free);
     g_hash_table_foreach (hash,  (GHFunc) accumulator, (gpointer) seq);
 
     // iterate the sequence and print the pairs
     g_sequence_foreach (seq,  (GFunc) pair_printor, NULL);
 
     // try (unsuccessfully) to free everything
-    g_hash_table_destroy (hash);
+    g_strfreev(array);
     g_sequence_free (seq);
+    g_hash_table_destroy (hash);
 
     return 0;
 }

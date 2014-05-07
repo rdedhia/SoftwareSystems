@@ -63,8 +63,7 @@ class Controller:
 
         returns: float number of jobs
         """
-
-
+        
         self.i += e
         dError = e - self.pastError # Delta error ("derivative")
 
